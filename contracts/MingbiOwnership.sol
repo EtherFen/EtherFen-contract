@@ -5,8 +5,8 @@ import "./ERC721Draft.sol";
 
 contract MingbiOwnership is ERC721, MingbiBase {
     /// @notice Name and symbol of the non fungible token, as defined in ERC721.
-    string public name = "CryptoMingbi";
-    string public symbol = "CM";
+    string public name = "EtherFen";
+    string public symbol = "ETF";
 
     function implementsERC721() public pure returns (bool) {
         return true;
