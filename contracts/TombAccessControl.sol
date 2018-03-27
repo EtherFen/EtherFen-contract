@@ -1,6 +1,6 @@
 pragma solidity ^0.4.21;
 
-contract MingbiAccessControl {
+contract TombAccessControl {
     address public ownerAddress;
 
     modifier onlyOwner() {

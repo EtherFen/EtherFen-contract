@@ -1,9 +1,9 @@
 pragma solidity ^0.4.21;
 
-import "./MingbiAction.sol";
+import "./TombAction.sol";
 
-contract MingbiCore is MingbiAction {
-    function MingbiCore() public {
+contract TombCore is TombAction {
+    function TombCore() public {
         ownerAddress = msg.sender;
         currentPrice = 0.01 ether;
         factor = 0.02 ether;

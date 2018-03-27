@@ -1,9 +1,9 @@
 pragma solidity ^0.4.21;
 
-import "./MingbiBase.sol";
+import "./TombBase.sol";
 import "./ERC721Draft.sol";
 
-contract MingbiOwnership is ERC721, MingbiBase {
+contract TombOwnership is ERC721, TombBase {
     /// @notice Name and symbol of the non fungible token, as defined in ERC721.
     string public name = "EtherFen";
     string public symbol = "ETF";
@@ -13,15 +13,15 @@ contract MingbiOwnership is ERC721, MingbiBase {
     }
 
     function totalSupply() public view returns (uint) {
-        return mingbies.length;
+        return tombs.length;
     }
 
     function balanceOf(address _owner) public view returns (uint256 _balance) {
-        return ownerMingbiCount[_owner];
+        return ownerTombCount[_owner];
     }
 
     function ownerOf(uint256 _tokenId) public view returns (address _owner) {
-        return mingbiToOwner[_tokenId];
+        return tombToOwner[_tokenId];
     }
 
     function transfer(address _to, uint256 _tokenId) public onlyOwnerOf(_tokenId) {
@@ -29,7 +29,7 @@ contract MingbiOwnership is ERC721, MingbiBase {
     }
 
     function approve(address _to, uint256 _tokenId) public onlyOwnerOf(_tokenId) {
-        mingbiApprovals[_tokenId] = _to;
+        tombApprovals[_tokenId] = _to;
         emit Approval(msg.sender, _to, _tokenId);
     }
 
@@ -37,13 +37,13 @@ contract MingbiOwnership is ERC721, MingbiBase {
     {
         require(_to != address(0));
         require(_to != address(this));
-        require(mingbiApprovals[_tokenId] == msg.sender);
-        require(mingbiToOwner[_tokenId] == _from);
+        require(tombApprovals[_tokenId] == msg.sender);
+        require(tombToOwner[_tokenId] == _from);
         _transfer(_from, _to, _tokenId);
     }
 
     modifier onlyOwnerOf(uint256 _tokenId) {
-        require(mingbiToOwner[_tokenId] == msg.sender);
+        require(tombToOwner[_tokenId] == msg.sender);
         _;
     }
 }
