@@ -9,13 +9,13 @@ contract TombBase is TombAccessControl {
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
     struct Tomb {
         // The timestamp from the block when this tomb came into existence.
-        address burner;
+        address craveman;
         string data;
     }
 
     // An array containing all existing tomb
     Tomb[] tombs;
-    uint256 burnt;
+    uint256 craved;
     mapping (uint => address) public tombToOwner;
     mapping (address => uint) ownerTombCount;
     mapping (uint => address) tombApprovals;
@@ -33,7 +33,7 @@ contract TombBase is TombAccessControl {
     function _createTomb(address _owner) internal returns (uint) {
         Tomb memory _tomb = Tomb({
             data: "",
-            burner: address(0)
+            craveman: address(0)
         });
 
         uint256 newTombId = (tombs.push(_tomb)).sub(1);
@@ -54,10 +54,10 @@ contract TombBase is TombAccessControl {
     }
 
     function getTombBurnt() external view returns(uint[]) {
-        uint[] memory result = new uint[](burnt);
+        uint[] memory result = new uint[](craved);
         uint counter = 0;
         for (uint i = 0; i < tombs.length; i++) {
-            if (tombs[i].burner != address(0)) {
+            if (tombs[i].craveman != address(0)) {
                 result[counter] = i;
                 counter++;
             }
@@ -66,7 +66,7 @@ contract TombBase is TombAccessControl {
     }
 
     function getTombDetail(uint index) external view returns(address, address, string) {
-        // returns owner, burner, data
-        return (tombToOwner[index], tombs[index].burner, tombs[index].data);
+        // returns owner, craveman, data
+        return (tombToOwner[index], tombs[index].craveman, tombs[index].data);
     }
 }

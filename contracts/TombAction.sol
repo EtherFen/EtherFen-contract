@@ -12,14 +12,14 @@ contract TombAction is TombOwnership {
         _createTomb(msg.sender);
     }
 
-    function burn(uint _coinId, string data) external onlyOwnerOf(_coinId){
+    function crave(uint _coinId, string data) external onlyOwnerOf(_coinId){
         Tomb storage tomb = tombs[_coinId];
-        // Can't double burnt a tomb
-        if (tomb.burner != address(0)) revert();
-        burnt += 1;
+        // Can't double craved a tomb
+        if (tomb.craveman != address(0)) revert();
+        craved += 1;
         currentPrice = currentPrice.sub(factor);
         tomb.data = data;
-        tomb.burner = msg.sender;
+        tomb.craveman = msg.sender;
         _transfer(msg.sender, address(0), _coinId);
     }
 
