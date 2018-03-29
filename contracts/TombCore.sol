@@ -5,7 +5,6 @@ import "./TombAction.sol";
 contract TombCore is TombAction {
     function TombCore() public {
         ownerAddress = msg.sender;
-        currentPrice = 0.01 ether;
-        factor = 0.02 ether;
+        currentPrice = 0.02 ether;
     }
 }
