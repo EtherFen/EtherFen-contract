@@ -9,13 +9,12 @@ contract TombBase is TombAccessControl {
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
     struct Tomb {
         // The timestamp from the block when this tomb came into existence.
-        address craveman;
+        address sculptor;
         string data;
     }
 
     // An array containing all existing tomb
     Tomb[] tombs;
-    uint256 craved;
     mapping (uint => address) public tombToOwner;
     mapping (address => uint) ownerTombCount;
     mapping (uint => address) tombApprovals;
@@ -30,12 +29,11 @@ contract TombBase is TombAccessControl {
         emit Transfer(_from, _to, _tokenId);
     }
 
-    function _createTomb(address _owner) internal returns (uint) {
+    function _createTombWithData(address _owner, string givenData) internal returns (uint) {
         Tomb memory _tomb = Tomb({
-            data: "",
-            craveman: address(0)
+            data: givenData,
+            sculptor: _owner
         });
-
         uint256 newTombId = (tombs.push(_tomb)).sub(1);
         _transfer(0, _owner, newTombId);
         return newTombId;
@@ -53,20 +51,16 @@ contract TombBase is TombAccessControl {
         return result;
     }
 
-    function getTombBurnt() external view returns(uint[]) {
-        uint[] memory result = new uint[](craved);
-        uint counter = 0;
+    function getAllTombs() external view returns(uint[]) {
+        uint[] memory result = new uint[](tombs.length);
         for (uint i = 0; i < tombs.length; i++) {
-            if (tombs[i].craveman != address(0)) {
-                result[counter] = i;
-                counter++;
-            }
+            result[i] = i;
         }
         return result;
     }
 
     function getTombDetail(uint index) external view returns(address, address, string) {
-        // returns owner, craveman, data
-        return (tombToOwner[index], tombs[index].craveman, tombs[index].data);
+        // returns owner, sculptor, data
+        return (tombToOwner[index], tombs[index].sculptor, tombs[index].data);
     }
 }

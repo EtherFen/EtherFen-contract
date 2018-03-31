@@ -5,23 +5,15 @@ import "./TombOwnership.sol";
 contract TombAction is TombOwnership {
     uint256 currentPrice;
 
-    function breed() payable external {
+    function buyAndCrave(string data) payable external {
         if (msg.value < currentPrice) revert();
-        _createTomb(msg.sender);
+        _createTombWithData(msg.sender, data);
     }
-
-    function crave(uint _coinId, string data) external onlyOwnerOf(_coinId){
-        Tomb storage tomb = tombs[_coinId];
-        // Can't double craved a tomb
-        if (tomb.craveman != address(0)) revert();
-        craved += 1;
-        tomb.data = data;
-        tomb.craveman = msg.sender;
-        _transfer(msg.sender, address(0), _coinId);
-    }
-
+ 
     function changePrice(uint256 newPrice) external onlyOwner {
-        currentPrice = newPrice;
+        //gwei to ether
+        uint256 gweiUnit = 1000000000;
+        currentPrice = newPrice.mul(gweiUnit);
     }
 
     function getPrice() external view returns(uint256) {
